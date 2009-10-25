@@ -6,7 +6,7 @@
 # no regular words or you'll be exposed to dictionary attacks.
 ActionController::Base.session = {
   :key         => '_Flickr-Gadget_session',
-  :secret      => '916b80c3bd6e00a0267a3103073400c43ec6f47496d6f849bb543f519c71e42c12c3790e4b53c1e3c54db7f708ad9d8f39ac8946c0c0689a767724eb4780cc42'
+  :secret      => 'e9516a6a0152d447e2dfd14a3d748088e01fe7d01af9cc5155fa9559b2cad288a1f21065a9857a34d1e48ed91380dd51cfa5f2a4f1cb198c5152e11613226cb6'
 }
 
 # Use the database for sessions instead of the cookie-based default,

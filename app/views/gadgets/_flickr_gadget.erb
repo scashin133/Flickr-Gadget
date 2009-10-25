@@ -22,12 +22,14 @@
     html += "</p>"
     html += "</div>"
     html += "</div>"
+    return html;
   };
   
   function addFilmstrip(data){
     var html = "<li>"
     html += "<img src='" + data.getElementsByTagName("media:thumbnail")[0].getAttribute("url") + "' alt='" + data.getElementsByTagName("title")[0].childNodes[0].nodeValue + "' title='" + data.getElementsByTagName("title")[0].childNodes[0].nodeValue + "' />"
     html += "</li>"
+    return html;
   }
   
   function response(obj){

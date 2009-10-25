@@ -1,6 +1,23 @@
-<div style="text-align:center"><a
-  id="Riggs" title="My Photo Album" target="_blank" 
-  href="http://picasaweb.google.com/doc.examples/ShelfBoy">
-  <img border="0" alt="Photo" src="http://doc.examples.googlepages.com/Riggsie-OP.jpg" 
-  title="Click Here."></a>
-</div>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" ></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" ></script>
+
+<div id="gallery_photos" class="galleryview"></div>
+
+<script type="text/javascript">
+
+  var prefs = new gadgets.Prefs();
+  
+  var flickrUrl = prefs.getString("flickr_feed_url");
+  
+  function createPhotoPanel(data){
+    
+  };
+  var params = {};
+  params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.FEED;
+  params[gadgets.io.RequestParameters.NUM_ENTRIES] = 100;
+  
+  
+  gadgets.io.makeRequest(flickrUrl, function(data){
+    
+  }, params)
+</script>

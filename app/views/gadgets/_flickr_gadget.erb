@@ -1,56 +1,42 @@
 <div id="gallery_photos" class="galleryview"></div>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" ></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" ></script>
-
-
 <script type="text/javascript">
 
   var prefs = new gadgets.Prefs();
   
   var flickrUrl = prefs.getString("flickr_feed_url");
+  var gallery = document.getElementById("gallery_photos");
   
-  function createPhotoPanel(data){
-    var html = "<div class='panel'>"
-    html += "<img src='" + data.getElementsByTagName("media:content")[0].getAttribute("url") + "' />"
-    html += "<div class='panel-overlay>"
-    html += "<h2>"
-    html += data.getElementsByTagName("title")[0].childNodes[0].nodeValue;
-    html += "</h2>"
-    html += "<p>"
-    html += data.getElementsByTagName("description")[0].childNodes[0].nodeValue;
-    html += "</p>"
-    html += "</div>"
-    html += "</div>"
-    return html;
-  };
-  
-  function addFilmstrip(data){
-    var html = "<li>"
-    html += "<img src='" + data.getElementsByTagName("media:thumbnail")[0].getAttribute("url") + "' alt='" + data.getElementsByTagName("title")[0].childNodes[0].nodeValue + "' title='" + data.getElementsByTagName("title")[0].childNodes[0].nodeValue + "' />"
-    html += "</li>"
-    return html;
+  function wrapInP(entryAttribute){
+    return "<p>" + entryAttribute + "</p>"
   }
   
   function response(obj){
-    var feed = obj.data.getElementsByTagName("item");
-    var html = "";
-    var filmStrip = "<ul class='filmstrip'>";
-    
-    for (var i = 0; i < feed.length; i++) {
-      html += createPhotoPanel(feed.item(i));
-      filmStrip += addFilmstrip(feed.item(i));
+    var feed = obj.data;
+    var html = "<div>";
+    html += wrapInP(feed.URL);
+    html += wrapInP(feed.Title);
+    html += wrapInP(feed.Description);
+    html += wrapInP(feed.Link);
+    html += wrapInP(feed.Author);
+    html += "<ul>";
+    if (feed.Entry) {
+      for (var i = 0; i < feed.Entry.length; i++) {
+        var entry = feed.Entry[i];
+        html += "<li>";
+        html += wrapInP(entry.Title);
+        html += wrapInP(entry.Link);
+        html += wrapInP(entry.Summary);
+        html += wrapInP(entry.Date);
+        html += "</li>";
+      };
     };
-
-    filmStrip += "</ul>"
-    document.getElementById('gallery_photos').innerHTML = (html + filmStrip);
-    
   };
   
   function getFeed(){
     var params = {};
-    params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.DOM;
-    params[gadgets.io.RequestParameters.NUM_ENTRIES] = 100;
+    params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.FEED;
+    params[gadgets.io.RequestParameters.NUM_ENTRIES] = 5;
 
     gadgets.io.makeRequest(flickrUrl, response, params);
   }

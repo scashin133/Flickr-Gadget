@@ -4,44 +4,53 @@
 
   var prefs = new gadgets.Prefs();
   
-  var flickrUrl = prefs.getString("flickr_feed_url");
+  var flickrUsername = prefs.getString("flickr_username");
   var gallery = document.getElementById("gallery_photos");
   
   function wrapInP(entryAttribute){
     return "<p>" + entryAttribute + "</p>"
   }
   
-  function response(obj){
-    var feed = obj.data;
-    var html = "<div>";
-    html += wrapInP(feed.URL);
-    html += wrapInP(feed.Title);
-    html += wrapInP(feed.Description);
-    html += wrapInP(feed.Link);
-    html += wrapInP(feed.Author);
-    html += "<ul>";
-    if (feed.Entry) {
-      for (var i = 0; i < feed.Entry.length; i++) {
-        var entry = feed.Entry[i];
+  function wrapInImg(entryAttribute){
+    return "<img src=" + entryAttribute + "></img>"
+  }
+    
+  function photosUrl(obj){
+    var jsondata = obj.data;
+    
+    var html = "<ul>";
+    if (jsondata.photos.photo) {
+      for (var i = 0; i < jsondata.photos.photo.length; i++) {
+        var photo = jsondata.photos.photo[i];
         html += "<li>";
-        html += wrapInP(entry.Title);
-        html += wrapInP(entry.Link);
-        html += wrapInP(entry.Summary);
-        html += wrapInP(entry.Date);
+        html += wrapInP(photo.title);
+        html += wrapInImg(photo.url_sq);
+        html += wrapInImg(photo.url_m);
         html += "</li>";
       };
     };
     gallery.innerHTML = html;
+    
+  }
+  
+  function userIdResponse(obj){
+    var jsondata = obj.data;
+    var photosUrl = "http://api.flickr.com/services/rest/?&method=flickr.people.getPublicPhotos&api_key=<%= FLICKR_API_KEY -%>&user_id=" + jsondata.user.nsid + "&per_page=30&page=1&format=json&extras=url_sq,url_m&nojsoncallback=1";
+    
+    var params = {};
+    params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+    
+    gadgets.io.makeRequest(photosUrl, photosResponse, params);
   };
   
-  function getFeed(){
+  function getUserId(){
     var params = {};
-    params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.FEED;
-    params[gadgets.io.RequestParameters.NUM_ENTRIES] = 5;
-
-    gadgets.io.makeRequest(flickrUrl, response, params);
+    params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+    
+    var userUrl = "http://api.flickr.com/services/rest/?&method=flickr.people.findByUsername&api_key=<%= FLICKR_API_KEY -%>&user_id=" + flickrUsername + "&format=json&nojsoncallback=1";
+    gadgets.io.makeRequest(userUrl, userIdResponse, params);
   }
-
-  gadgets.util.registerOnLoadHandler(getFeed);
+  
+  gadgets.util.registerOnLoadHandler(getUserId);
   
 </script>

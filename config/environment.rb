@@ -39,3 +39,6 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 end
+
+FLICKR_API_KEY = "115234d73593b2871ba6d9e906c151d8"
+FLICKR_API_SECRET = "d8ab4b80cdc8c9bf"

@@ -11,7 +11,7 @@ xml.Module do
         Provides a gallery of your latest photos from Flickr.
       }
   )
-  xml.UserPref(:name => "flickr_feed_url", :display_name => "Flickr Feed URL", :required => true)
+  xml.UserPref(:name => "flickr_username", :display_name => "Flickr Username", :required => true)
   xml.Content(:type => "html") do |content|
     content.cdata!(render(:partial => "flickr_gadget"))
   end

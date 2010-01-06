@@ -35,7 +35,7 @@
   
   function userIdResponse(obj){
     var jsondata = obj.data;
-    var photosUrl = "http://api.flickr.com/services/rest/?&method=flickr.people.getPublicPhotos&api_key=<%= FLICKR_API_KEY -%>&user_id=" + jsondata.user.nsid + "&per_page=30&page=1&format=json&extras=url_sq,url_m&nojsoncallback=1";
+    var photosUrl = "http://api.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&api_key=<%= FLICKR_API_KEY -%>&user_id=" + jsondata.user.nsid + "&per_page=30&page=1&format=json&extras=url_sq,url_m&nojsoncallback=1";
     
     var params = {};
     params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
@@ -46,8 +46,8 @@
   function getUserId(){
     var params = {};
     params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
-    
-    var userUrl = "http://api.flickr.com/services/rest/?&method=flickr.people.findByUsername&api_key=<%= FLICKR_API_KEY -%>&user_id=" + flickrUsername + "&format=json&nojsoncallback=1";
+    var userUrl = "http://api.flickr.com/services/rest/?method=flickr.people.findByUsername&api_key=<%= FLICKR_API_KEY -%>&username=KDCashin" + flickrUsername + "&format=json&nojsoncallback=1";
+
     gadgets.io.makeRequest(userUrl, userIdResponse, params);
   }
   

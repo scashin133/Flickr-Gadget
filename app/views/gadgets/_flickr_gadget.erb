@@ -46,7 +46,7 @@
   function getUserId(){
     var params = {};
     params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
-    var userUrl = "http://api.flickr.com/services/rest/?method=flickr.people.findByUsername&api_key=<%= FLICKR_API_KEY -%>&username=KDCashin" + flickrUsername + "&format=json&nojsoncallback=1";
+    var userUrl = "http://api.flickr.com/services/rest/?method=flickr.people.findByUsername&api_key=<%= FLICKR_API_KEY -%>&username=" + flickrUsername + "&format=json&nojsoncallback=1";
 
     gadgets.io.makeRequest(userUrl, userIdResponse, params);
   }
